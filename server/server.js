@@ -17,19 +17,23 @@ app.get('/',(req,res)=>
 const PORT=process.env.PORT
 
 app.use(express.json());
-app.use(cors())
+app.use(cors({
+   origin:true,
+   credentials:true
+}))
 app.use(cookieParser())
 
 //Routes for CRUD Operations
 app.use('/college',Collegerouter)
-app.use('/donar',AuthRouter)
+app.use('/auth',AuthRouter)
 //next function for handling error
 
 app.use((err,req,res,next)=>
-{
+{   
+    console.error(" Server Error:", err.stack);
     res.status(500).send({success:false,message:err.message})
 })
-app.listen(PORT,()=>
+app.listen(PORT,'0.0.0.0',()=>
 {
     console.log(`http://localhost:${PORT}`)
 })

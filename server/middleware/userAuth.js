@@ -14,6 +14,9 @@ export const userAuth=async(req,res,next)=>
         }
         else{
             req.body.userId=tokenDecode.id;
+            req.body.role=tokenDecode.role;
+            console.log(req.body.role)
+            console.log(tokenDecode.id)
         }
         next()
     } catch (error) {
