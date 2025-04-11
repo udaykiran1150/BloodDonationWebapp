@@ -14,7 +14,6 @@ const UploadImage = () => {
     {
         document.getElementById('inputBox').click()
         
-        // document.getElementById('imageInput').click();
     }
   return (
     <div className='justify-center items-center flex' >

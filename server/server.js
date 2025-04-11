@@ -18,7 +18,7 @@ const PORT=process.env.PORT
 
 app.use(express.json());
 app.use(cors({
-   origin:true,
+   origin:process.env.FRONTEND_URL,
    credentials:true
 }))
 app.use(cookieParser())

@@ -25,10 +25,10 @@ const SignUp = () => {
    const navigate=useNavigate()
 
   const {user,setUser}=useContext(userContext)
-   //Context 
-
-  //  const {DcolegeId,setDcollegeId,CurrentColleg,setCurrentCollege,getCurrentCollegeId}=useContext(userContext)
+  const {DcolegeId,setDcollegeId,CurrentColleg,setCurrentCollege,getCurrentCollegeId}=useContext(userContext)
   
+  const BACKEND_URL=import.meta.env.VITE_BACKEND_URL
+  console.log(BACKEND_URL)
    //Register 
 
   
@@ -37,7 +37,7 @@ const SignUp = () => {
     console.log(name,email,password,phoneNumber,idno,address,collegeName)
    
     try {
-        const respose=await axios.post('http://localhost:3000/auth/registerdonar',{
+        const respose=await axios.post(`${BACKEND_URL}/auth/registerdonar`,{
           name,
           email,
           password,
@@ -70,7 +70,7 @@ const SignUp = () => {
     const fetchData = async () => {
       
       const response = await axios.get(
-        "http://localhost:3000/college/getallcolleges"
+        `${BACKEND_URL}/college/getallcolleges`
       );
 
       setColleges(response.data.colleges);
@@ -90,7 +90,7 @@ const SignUp = () => {
       
       <div className=" glass-card absolute text-black lg:right-20  top-[20%] justify-center text-center  lg:top-30   border-2 w-100">
         <h2 className="font-bold text-4xl">Sign Up</h2>
-        <div className="mt-7 w-full">
+        <div className="mt-7 w-full flex flex-col gap-4">
           <div className=" gap-7 flex  items-center justify-center" >
             <FontAwesomeIcon icon={faUser} />
             <input type="text" placeholder="Enter name"  className="outline-none   text-[#686363]" onChange={(e)=>{setName(e.target.value)}}/>
@@ -124,6 +124,9 @@ const SignUp = () => {
             <textarea placeholder="Enter your current location" className="outline-none text-[#686363]"  onChange={(e)=>{setAddress(e.target.value)}}></textarea>
           </div>
           <button className="bg-red-400 w-full py-2 rounded-2xl mt-2 text-gray-700" onClick={HandleRegister}>Submit</button>
+          <div className="text-gray-400">
+            <p>Already have an account ? <a href="/" className="text-blue-700 hover:underline hover:text-blue-400">Sign in</a> </p>
+          </div>
         </div>
       </div>
     </div>

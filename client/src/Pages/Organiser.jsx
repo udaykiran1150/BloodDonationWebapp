@@ -7,14 +7,17 @@ import { userContext } from '../Context/Context';
 import axios from 'axios';
 import Loader2 from '../Components/Loader2';
 import Spinner from '../Components/Spinner'
+import { toast } from 'react-toastify';
 
 
 const Organiser = () => {
   const [showbox,setShowbox]=useState(false);
   const {user,getWhoLoogedIn}=useContext(userContext)
-  const [description,setDescription]=useState()
+  const [description,setDescription]=useState(" ")
   const [donors,setDonors]=useState()
   const [isLoading,setIsLoading]=useState(false)
+  const BACKEND_URL=import.meta.env.VITE_BACKEND_URL
+
 
 
    useEffect(()=>
@@ -31,7 +34,7 @@ const Organiser = () => {
       {
           try {
             setIsLoading(true)
-            const response=await axios.post("http://localhost:3000/college/get-donor-organiser",{collegeName:user?.collegeName},{withCredentials:true})
+            const response=await axios.post(`${BACKEND_URL}/college/get-donor-organiser`,{collegeName:user?.collegeName},{withCredentials:true})
             console.log(response)
             setIsLoading(false)
             setDonors(response.data.donars)
@@ -53,11 +56,15 @@ const Organiser = () => {
   {
            try {
             
-              const response=await axios.post("http://localhost:3000/college/createpost",{description,organiserId:user?._id,collegeName:user?.collegeName},
+              const response=await axios.post(`${BACKEND_URL}/college/createpost`,{description,organiserId:user?._id,collegeName:user?.collegeName},
                 {withCredentials:true})
+
+                toast.success("post created successfully")
+
+                setDescription(" ");
                 
            } catch (error) {
-              console.log(error)
+              toast.error(error)
            }
   }
     
@@ -105,7 +112,8 @@ const Organiser = () => {
                 <FontAwesomeIcon icon={faXmark}  className='absolute right-0 mr-3 font-light text-gray-700  hover:cursor-pointer' onClick={create}/>
 
                 <textarea  className='h-[30vh] mt-5 rounded-3xl px-3 py-2 outline-0  text-gray-700' row="10" cols="30"
-                 onChange={(e)=>{setDescription(e.target.value)}}
+                 value={description}
+                onChange={(e)=>{setDescription(e.target.value)}}
                 />
 
                   <div className='absolute bottom-0 right-0 hover:bg-gray-400 hover:cursor-pointer rounded-full ' >

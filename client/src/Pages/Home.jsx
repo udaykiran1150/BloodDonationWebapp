@@ -1,27 +1,3 @@
-// import React from 'react'
-// import NavBar from '../Components/NavBar'
-
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faHandsHelping, faUser } from '@fortawesome/free-solid-svg-icons';
-// const Home = () => {
-//   return (
-//     <div>
-//       <NavBar/>
-
-//       <div className='relative mt-[50vh] ml-[50vw] flex '>
-//         <div className=''>
-//           <FontAwesomeIcon icon={faHandsHelping} className='text-5xl'/>
-//           Donars Portal</div>
-//         <div>Organisers Portal</div>
-//         <div>College Portal</div>
-//       </div>
-
-//     </div>
-//   )
-// }
-
-// export default Home
-
 
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

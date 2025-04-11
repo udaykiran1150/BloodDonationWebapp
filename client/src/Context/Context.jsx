@@ -13,10 +13,11 @@ const ContextProvider = ({ children }) => {
   const [temp,setTemp]=useState();
 
 
-  
+  const BACKEND_URL=import.meta.env.VITE_BACKEND_URL
+  console.log(BACKEND_URL)
 
   const getWhoLoogedIn = async () => {
-    const data = await axios.get("http://localhost:3000/auth/getcurrentuser", {
+    const data = await axios.get(`${BACKEND_URL}/auth/getcurrentuser`, {
       withCredentials: true,
     });
     setUser(data.data.user);
@@ -40,7 +41,7 @@ const ContextProvider = ({ children }) => {
   const logout = async () => {
 
     try {
-      const response = await axios.get("http://localhost:3000/auth/logout", {
+      const response = await axios.get(`${BACKEND_URL}/auth/logout`, {
         withCredentials: true,
       });
       
@@ -57,12 +58,13 @@ const ContextProvider = ({ children }) => {
     
   };
 
+
   const getPostsByCollegName=async(collegeName)=>
   {
     
      setDIsLoading(true)
    
-    const response=await axios.post('http://localhost:3000/college/getallposts',{collegeName},{withCredentials:true})
+    const response=await axios.post(`${BACKEND_URL}/college/getallposts`,{collegeName},{withCredentials:true})
   
     setDIsLoading(false)
     setPosts(response.data.posts)

@@ -13,6 +13,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { userContext } from "../Context/Context";
 
+const BACKEND_URL=import.meta.env.VITE_BACKEND_URL
+console.log(BACKEND_URL)
+
 const LoginPage = () => {
   const [email, setEmail] = useState();
   const[password,setPassword]=useState();
@@ -31,7 +34,7 @@ const LoginPage = () => {
 
         
          
-        const response=await axios.post('http://localhost:3000/auth/loginuser',{role,email,password},{withCredentials:true})
+        const response=await axios.post(`${BACKEND_URL}/auth/loginuser`,{role,email,password},{withCredentials:true})
       
         const loggedInUser = response.data.user;
         if(response.data.success )
@@ -129,6 +132,9 @@ const LoginPage = () => {
           <button className="bg-red-400 w-full py-2 rounded-2xl mt-2 text-gray-700" onClick={HandleLogin}>
             Submit
           </button>
+          <div className="text-gray-400">
+            <p>Don't you have an account ? <a href="/signup" className="text-blue-700 hover:underline hover:text-blue-400">Create one</a> </p>
+          </div>
         </div>
       </div>
     </div>

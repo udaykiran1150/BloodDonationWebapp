@@ -11,6 +11,8 @@ const Profile = () => {
     const [file,setFile]=useState("")
     const [image,setImage]=useState()
     const [isLoading,setIsLoading]=useState(false)
+    const BACKEND_URL=import.meta.env.VITE_BACKEND_URL
+    
 
 
     const editClicked=()=>
@@ -27,7 +29,7 @@ const Profile = () => {
         try {
             
           setIsLoading(true)
-            const response=await axios.post('http://localhost:3000/college/uploadprofile-pic',formData,
+            const response=await axios.post(`${BACKEND_URL}/college/uploadprofile-pic`,formData,
               { withCredentials: true })
                 
               window.location.reload();
