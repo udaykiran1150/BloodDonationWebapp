@@ -20,7 +20,7 @@ const ProtectedRoutes = ({ children, roles }) => {
         }
         init();
     },[])
-    console.log(user)
+    console.log("user is ",user)
 
     if (loading) {
         return   <div className='w-ful min-h-screen flex justify-center items-center '> <Loader1/></div>
