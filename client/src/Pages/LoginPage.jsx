@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Signup.css";
 import {
@@ -28,6 +28,20 @@ const LoginPage = () => {
   const navigate=useNavigate();
   
 
+ 
+    useEffect(() => {
+      if (user?.isAuthenticated) {
+        if (user.role === "donar") {
+          navigate("/donar");
+        } else if (user.role === "college") {
+          navigate("/college");
+        } else if (user.role === "organiser") {
+          navigate("/organiser");
+        }
+      }
+    }, [user]);
+  
+
   const HandleLogin=async()=>
   {
        try {
@@ -46,22 +60,20 @@ const LoginPage = () => {
           console.log("User set to:", response.data.user); 
           
           toast.success(`${role.toUpperCase()}  Login successfull`)
-          
          
-         
-            if(role==='donar')
-              {
-                  navigate('/donar')
-              }
-              else if(role==='college')
-              {
-                  navigate('/college')
-              }
+            // if(role==='donar')
+            //   {
+            //       navigate('/donar')
+            //   }
+            //   else if(role==='college')
+            //   {
+            //       navigate('/college')
+            //   }
               
-              else if(role==='organiser'){
+            //   else if(role==='organiser'){
               
-                  navigate('/organiser')
-              }
+            //       navigate('/organiser')
+            //   }
           
           
         }
