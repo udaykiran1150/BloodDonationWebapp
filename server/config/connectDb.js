@@ -7,7 +7,7 @@ import mongoose from "mongoose";
         } catch (error) {
             console.log(error)
 
-            throw new Error(`Data  Base connection lost:${error}`)
+             throw error;
         }
     
 }
