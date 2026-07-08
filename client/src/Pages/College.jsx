@@ -14,12 +14,14 @@ const College = () => {
     };
     init();
   }, []);
+  
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const temp = async () => {
       try {
         const reponse = await axios.post(
-          "http://localhost:3000/college/get-donor-organiser",
+          `${BACKEND_URL}/college/get-donor-organiser`,
           { collegeName: user?.collegeName },
           { withCredentials: true }
         );
