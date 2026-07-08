@@ -110,6 +110,13 @@ export const Logout = async (req, res, next) => {
     }
 
     user.isAuthenticated = false;
+    const isProduction = process.env.NODE_ENV === "production";
+
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: isProduction ? "None" : "Lax",
+    });
     res.clearCookie("token", {
       httpOnly: true,
     });
