@@ -13,75 +13,49 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { userContext } from "../Context/Context";
 
-const BACKEND_URL=import.meta.env.VITE_BACKEND_URL
-console.log(BACKEND_URL)
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const LoginPage = () => {
   const [email, setEmail] = useState();
-  const[password,setPassword]=useState();
+  const [password, setPassword] = useState();
   const [role, setRole] = useState();
-  const{user,setUser,temp,setTemp}=useContext(userContext);
-  const [fixed,setFixed]=useState(false);
- 
+  const { user, setUser, temp, setTemp } = useContext(userContext);
+  const [fixed, setFixed] = useState(false);
 
+  const navigate = useNavigate();
 
-  const navigate=useNavigate();
-  
-
- 
-    useEffect(() => {
-      if (user?.isAuthenticated) {
-        if (user.role === "donar") {
-          navigate("/donar");
-        } else if (user.role === "college") {
-          navigate("/college");
-        } else if (user.role === "organiser") {
-          navigate("/organiser");
-        }
+  useEffect(() => {
+    if (user?.isAuthenticated) {
+      if (user.role === "donar") {
+        navigate("/donar");
+      } else if (user.role === "college") {
+        navigate("/college");
+      } else if (user.role === "organiser") {
+        navigate("/organiser");
       }
-    }, [user]);
-  
+    }
+  }, [user]);
 
-  const HandleLogin=async()=>
-  {
-       try {
+  const HandleLogin = async () => {
+    try {
+      const response = await axios.post(
+        `${BACKEND_URL}/auth/loginuser`,
+        { role, email, password },
+        { withCredentials: true },
+      );
 
-        
-         
-        const response=await axios.post(`${BACKEND_URL}/auth/loginuser`,{role,email,password},{withCredentials:true})
-      
-        const loggedInUser = response.data.user;
-        if(response.data.success )
-        {
-         
-          setUser(loggedInUser);
-          
+      const loggedInUser = response.data.user;
+      if (response.data.success) {
+        setUser(loggedInUser);
 
-          console.log("User set to:", response.data.user); 
-          
-          toast.success(`${role.toUpperCase()}  Login successfull`)
-         
-            // if(role==='donar')
-            //   {
-            //       navigate('/donar')
-            //   }
-            //   else if(role==='college')
-            //   {
-            //       navigate('/college')
-            //   }
-              
-            //   else if(role==='organiser'){
-              
-            //       navigate('/organiser')
-            //   }
-          
-          
-        }
-        
-       } catch (error) {
-        toast.error(error.response.data.message)
-       }
-  }
+        console.log("User set to:", response.data.user);
+
+        toast.success(`${role.toUpperCase()}  Login successfull`);
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
   return (
     <div className="relative w-screen h-screen text-white  ">
       <div
@@ -116,36 +90,56 @@ const LoginPage = () => {
           </div>
           <div className="flex gap-3.5 justify-center">
             <div className="flex items-center gap-1.5 group">
-              <input type="radio"
-               name="role"
+              <input
+                type="radio"
+                name="role"
                 value="donar"
-                onChange={(e)=>{setRole(e.target.value)}}
-              /> <p>Donar</p>
+                onChange={(e) => {
+                  setRole(e.target.value);
+                }}
+              />{" "}
+              <p>Donar</p>
             </div>
             <div className="flex items-center gap-1.5 group">
-              <input type="radio"
-               name="role"
-               value="organiser"
-               onChange={(e)=>{setRole(e.target.value)}}
-               
-               />
-               <p>Organiser</p>
+              <input
+                type="radio"
+                name="role"
+                value="organiser"
+                onChange={(e) => {
+                  setRole(e.target.value);
+                }}
+              />
+              <p>Organiser</p>
             </div>
             <div className="flex items-center gap-1.5 group">
-              <input type="radio"
-               name="role"
-               value="college"
-               onChange={(e)=>{setRole(e.target.value)}}
+              <input
+                type="radio"
+                name="role"
+                value="college"
+                onChange={(e) => {
+                  setRole(e.target.value);
+                }}
               />
               <p>college</p>
             </div>
           </div>
 
-          <button className="bg-red-400 w-full py-2 rounded-2xl mt-2 text-gray-700" onClick={HandleLogin}>
+          <button
+            className="bg-red-400 w-full py-2 rounded-2xl mt-2 text-gray-700"
+            onClick={HandleLogin}
+          >
             Submit
           </button>
           <div className="text-gray-400">
-            <p>Don't you have an account ? <a href="/signup" className="text-blue-700 hover:underline hover:text-blue-400">Create one</a> </p>
+            <p>
+              Don't you have an account ?{" "}
+              <a
+                href="/signup"
+                className="text-blue-700 hover:underline hover:text-blue-400"
+              >
+                Create one
+              </a>{" "}
+            </p>
           </div>
         </div>
       </div>
