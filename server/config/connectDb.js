@@ -6,8 +6,11 @@ import mongoose from "mongoose";
                console.log("DataBase Connected Successfully");
         } catch (error) {
             console.log(error)
+
+            throw new Error(`Data  Base connection lost:${error}`)
         }
     
 }
 export default connectDb;
 
+ 
