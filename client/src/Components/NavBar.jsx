@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDroplet, faUser } from "@fortawesome/free-solid-svg-icons";
 import { userContext } from "../Context/Context";
@@ -8,6 +8,7 @@ const NavBar = () => {
   const { logout } = useContext(userContext);
   const menuRef = useRef(null);
   const navRef = useRef(null);
+  const [showLogout, setShowLogout] = useState(false);
 
   function myFunction() {
     menuRef.current.classList.toggle("change");
@@ -17,7 +18,6 @@ const NavBar = () => {
 
   return (
     <div>
-      
       <div className="bg-gray-200   py-4 px-4 flex justify-between items-center overflow-hidden">
         <FontAwesomeIcon
           icon={faDroplet}
@@ -28,16 +28,22 @@ const NavBar = () => {
           <a href="/profile">Profile</a>
           <a href="/">My History</a>
         </ul>
-        <div className="relative group hover:cursor-pointer">
-          <div className="px-3 py-3 rounded-full hover:bg-gray-200 lg:mr-0  mr-10" >
+        <div className="relative">
+          <div
+            className="px-3 py-3 rounded-full hover:bg-gray-200 lg:mr-0 mr-10 cursor-pointer"
+            onClick={() => setShowLogout(!showLogout)}
+          >
             <FontAwesomeIcon icon={faUser} />
           </div>
-          <div
-            className="absolute right-8 bottom-0 hidden group-hover:block px-6 py-2 bg-amber-100 rounded-4xl"
-            onClick={logout}
-          >
-            Logout
-          </div>
+
+          {showLogout && (
+            <div
+              className="absolute md:right-10 top-5  right-20 px-6 py-2 bg-amber-100 rounded-xl shadow-md"
+              onClick={logout}
+            >
+              Logout
+            </div>
+          )}
         </div>
       </div>
 
